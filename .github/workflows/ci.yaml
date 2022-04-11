@@ -28,7 +28,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
-          target: wasm32-unknown-unknown
+          target: ${{ matrix.target }}
           override: true
           components: rustfmt, clippy
 
@@ -43,7 +43,7 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-          key: ${{ runner.os }}-cargo-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo-${{ matrix.target }}-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run cargo fmt
         uses: actions-rs/cargo@v1
@@ -55,11 +55,11 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --tests --target wasm32-unknown-unknown
+          args: --tests --target ${{ matrix.target }}
 
       - name: Run cargo clippy
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --target wasm32-unknown-unknown -- -D warnings
+          args: --target ${{ matrix.target }} -- -D warnings
 
