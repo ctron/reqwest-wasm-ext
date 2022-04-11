@@ -8,3 +8,32 @@ This crate works around [seanmonstar/reqwest#1095](https://github.com/seanmonsta
 
 Once [seanmonstar/reqwest#1096](https://github.com/seanmonstar/reqwest/pull/1096) is finally merged, this crate
 should become obsolete.
+
+## Example
+
+Using the trait:
+
+```rust
+use reqwest::Client;
+use reqwest_wasm_ext::RequestExt;
+
+async fn do_request() {
+    let client = Client::new();
+    let req = client.get("http://localhost")
+        .basic_auth_ext("foo", Some("bar"));
+}
+```
+
+Using the drop-in replacement function:
+
+```rust
+use reqwest::Client;
+#[cfg(target_arch = "wasm32")]
+use reqwest_wasm_ext::RequestExt;
+
+async fn do_request() {
+    let client = Client::new();
+    let req = client.get("http://localhost")
+        .basic_auth("foo", Some("bar"));
+}
+```
