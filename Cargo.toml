@@ -1,0 +1,17 @@
+[package]
+name = "reqwest-wasm-ext"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jens Reimann <jreimann@redhat.com>"]
+license = "Apache-2.0"
+description = "Fixes for reqwest on wasm"
+repository = "https://github.com/ctron/reqwest-wasm-ext2"
+categories = ["wasm", "web-programming"]
+keywords = ["reqwest", "wasm", "web"]
+readme = "README.md"
+
+[dependencies]
+reqwest = "0.11"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+base64 = "0.13"
